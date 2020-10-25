@@ -30,6 +30,60 @@ namespace MyShop.DataAcess.InMemory
             cache["products"] = products;
         }
 
+        public void insert(Products p)
+        {
+            products.Add(p);
+        }
+
+        public void Update(Products EditProduct)
+        {
+            Products producttoupdate = products.Find(p => p.Id == EditProduct.Id);
+            if(producttoupdate!=null)
+            {
+                producttoupdate = EditProduct;
+            }
+
+            else
+            {
+                throw new Exception("Item Not Found");
+
+            }
+        }
+
+        public Products Find(String Id)
+        {
+            Products product = products.Find(p => p.Id ==Id);
+            if (product != null)
+            {
+                return product;
+            }
+
+            else
+            {
+                throw new Exception("Item Not Found");
+
+            }
+        }
+
+        public IQueryable<Products> Collection()
+        {
+            return products.AsQueryable();
+        }
+
+        public void delete(String Id)
+        {
+            Products producttodelete = products.Find(p => p.Id ==Id);
+            if (producttodelete != null)
+            {
+                products.Remove(producttodelete);
+            }
+
+            else
+            {
+                throw new Exception("Item Not Found");
+
+            }
+        }
 
     }
 }
